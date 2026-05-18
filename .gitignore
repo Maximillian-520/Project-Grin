@@ -73,3 +73,14 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Developer Folders
+/[Dd]eveloper/
+/[Dd]ev/
+/[Aa]ssets/[Dd]eveloper/
+/[Aa]ssets/[Dd]ev/
+# Developer Folders (meta)
+/[Dd]eveloper.meta
+/[Dd]ev.meta
+/[Aa]ssets/[Dd]eveloper.meta
+/[Aa]ssets/[Dd]ev.meta

@@ -271,7 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xAxisRig: {fileID: 590855540}
   yAxisRig: {fileID: 330585546}
-  sensitivity: 400
+  sensitivity: 300
   verticalLookLimit: 90
 --- !u!1 &410087039
 GameObject:
