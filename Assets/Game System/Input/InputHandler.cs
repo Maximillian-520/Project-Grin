@@ -14,7 +14,7 @@ public class InputHandler : MonoBehaviour
     public UnityEvent OnCursorTogglePressed;
     public UnityEvent OnCursorToggleReleased;
 
-    public InputHandler Instance {private set; get;}
+    public static InputHandler Instance {private set; get;}
 
     public Vector2 moveInput = Vector2.zero;
     public bool sprintInput = false;
