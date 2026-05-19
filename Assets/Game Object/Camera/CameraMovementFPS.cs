@@ -5,14 +5,17 @@ using UnityEngine;
 /// Camera component used for FPS camera movement.
 /// </summary>
 
-public class CameraViewFPS : MonoBehaviour
+public class CameraMovementFPS : MonoBehaviour
 {
     [Header("Node References")]
     [SerializeField] private Transform xAxisRig;
     [SerializeField] private Transform yAxisRig;
     [Header("Camera Settings")]
-    [SerializeField] private float sensitivity = 300.0f;
+    [SerializeField] private float baseSensitivity = 300.0f;
+    public float sensitivityScale = 1.0f;
     [Range(0f, 90f)] public float verticalLookLimit = 90f;
+    public bool invertXAxis = false;
+    public bool invertYAxis = false;
 
     private float verticalRotation;
 
@@ -33,8 +36,11 @@ public class CameraViewFPS : MonoBehaviour
     private void FixedUpdate()
     {
         // Get mouse movement
+        float sensitivity = baseSensitivity * sensitivityScale;
         float mouseMovementX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
         float mouseMovementY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+        if (invertXAxis) mouseMovementX *= -1;
+        if (invertYAxis) mouseMovementY *= -1;
         // Apply horizontal rotation
         xAxisRig.Rotate(Vector3.up * mouseMovementX);
         // Apply vertical rotation
