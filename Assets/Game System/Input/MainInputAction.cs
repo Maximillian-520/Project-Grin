@@ -239,7 +239,7 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""bcdbc1fc-b343-4e90-bfb9-12d79844d836"",
-                    ""path"": ""<Keyboard>/ctrl"",
+                    ""path"": ""<Keyboard>/alt"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
