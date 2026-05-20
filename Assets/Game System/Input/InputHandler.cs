@@ -21,6 +21,7 @@ public class InputHandler : MonoBehaviour
     public bool jumpInput = false;
     public bool crouchInput = false;
     public bool cursorToggleInput = false;
+    public bool shootInput = false;
 
     // ====================================================================================================
     //                     Virtual Functions
@@ -60,6 +61,11 @@ public class InputHandler : MonoBehaviour
         if (!cursorToggleInput && ctx.performed) OnCursorTogglePressed.Invoke();
         if (cursorToggleInput && !ctx.performed) OnCursorToggleReleased.Invoke();
         cursorToggleInput = ctx.performed;
+    }
+
+    public void UpdateShootInput(InputAction.CallbackContext ctx)
+    {
+        shootInput = ctx.performed;
     }
     #endregion
 }

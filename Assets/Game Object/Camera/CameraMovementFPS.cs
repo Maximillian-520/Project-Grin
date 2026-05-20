@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class CameraMovementFPS : MonoBehaviour
 {
-    [Header("Node References")]
+    [Header("Component and Object")]
     [SerializeField] private Transform xAxisRig;
     [SerializeField] private Transform yAxisRig;
     [Header("Camera Settings")]

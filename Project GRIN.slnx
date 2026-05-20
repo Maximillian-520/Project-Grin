@@ -2,7 +2,7 @@
   <Project Path="Nova.Editor.csproj" />
   <Project Path="Nova.UIControls.csproj" />
   <Project Path="Nova.csproj" />
-  <Project Path="Nova.Compat.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Nova.Compat.csproj" />
   <Project Path="Nova.UIControls.Editor.csproj" />
 </Solution>
