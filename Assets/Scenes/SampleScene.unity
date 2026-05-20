@@ -176,7 +176,6 @@ MonoBehaviour:
   crouchInput: 0
   cursorToggleInput: 0
   shootInput: 0
-  scrollInput: {x: 0, y: 0}
 --- !u!114 &105376703
 MonoBehaviour:
   m_ObjectHideFlags: 0
