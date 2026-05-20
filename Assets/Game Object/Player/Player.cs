@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [Header("Node References")]
+    [Header("Component and Object")]
     [SerializeField] private CameraMovementFPS cameraMovementFPS;
 
     private bool isCursorLocked = true;
