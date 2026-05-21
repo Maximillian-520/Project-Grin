@@ -2,19 +2,19 @@ using UnityEngine;
 
 public class Rifle : BaseWeapon
 {
+    const float EFFECT_BUFFER_DURATION = 0.1f;
+
     [Header("Component and Object")]
     [SerializeField] private Camera fpsCamera;
-    [SerializeField] private Transform muzzlePosition;
+    [SerializeField] private GameObject muzzleFlashEffect;
 
     [Header("Gun Data")]
     [SerializeField] private int fireRate = 6;
     [SerializeField] private float maxSpread = 9f;
-    [SerializeField] private GameObject muzzleFlashEffectPrefab;
     [SerializeField] private GameObject bulletHitEffectPrefab;
-    [SerializeField] private float muzzleFlashEffectDuration = 0.5f;
     [SerializeField] private float bulletHitEffectDuration = 0.5f;
 
-    private float nextFireTime = 0;
+    private float nextFireTime = -1f;
 
     // ====================================================================================================
     //                     Virtual Functions
@@ -24,9 +24,16 @@ public class Rifle : BaseWeapon
     {
         // Assertion check
         Debug.Assert(fpsCamera, "fpsCamera is missing");
-        Debug.Assert(muzzlePosition, "muzzlePosition is missing");
-        Debug.Assert(muzzleFlashEffectPrefab, "muzzleFlashEffectPrefab is missing");
+        Debug.Assert(muzzleFlashEffect, "muzzleFlashEffect is missing");
         Debug.Assert(bulletHitEffectPrefab, "bulletHitEffectPrefab is empty");
+        // Initialize
+        muzzleFlashEffect.SetActive(false);
+    }
+
+    private void FixedUpdate()
+    {
+        // Update muzzle flash effect
+        muzzleFlashEffect.SetActive(Time.time < nextFireTime + EFFECT_BUFFER_DURATION);
     }
     #endregion
 
@@ -56,9 +63,6 @@ public class Rifle : BaseWeapon
             );
             Destroy(bulletHitEffectInstance, bulletHitEffectDuration);
         }
-        // Spawn muzzle flash effect
-        GameObject muzzleFlashEffectInstance = Instantiate(muzzleFlashEffectPrefab, muzzlePosition);
-        Destroy(muzzleFlashEffectInstance, muzzleFlashEffectDuration);
         // Set fire time
         nextFireTime = Time.time + (1.0f / (float)fireRate);
     }
