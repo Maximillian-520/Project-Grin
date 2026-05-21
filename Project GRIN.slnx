@@ -5,4 +5,5 @@
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Nova.Compat.csproj" />
   <Project Path="Nova.UIControls.Editor.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
 </Solution>
