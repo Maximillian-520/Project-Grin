@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,17 +10,23 @@ public class GrinAttack : MonoBehaviour
     [Header("Component and Object")]
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GrinVisual grinVisual;
+    [SerializeField] private Transform slashHitPosition;
     [SerializeField] private Transform bulletSpawnPosition;
     [SerializeField] private GameObject muzzleFlashEffect;
     [Header("Slash Attack Data")]
     [SerializeField] private float dashSpeed = 10f;
     [SerializeField] private float maxDashDistanceToPlayer = 0.5f;
+    [SerializeField] private float slashRange = 10f;
+    [SerializeField] private int slashDamage = 40;
     [Header("Shoot Attack Data")]
     [SerializeField] private Bullet bulletPrefab;
     [SerializeField] private float beforeShootDelay = 0.5f;
     [SerializeField] private float shootDuration = 1.5f;
     [SerializeField] private float shootRate = 8;
+    [SerializeField] private float shootMaxSpread = 9f;
+    [SerializeField] private int shootDamage = 10;
 
+    private Coroutine currentCoroutine;
     private bool isSlashAnimationFinished = false;
 
     // ====================================================================================================
@@ -31,11 +38,13 @@ public class GrinAttack : MonoBehaviour
         // Assertion check
         Debug.Assert(rb, "rb is missing");
         Debug.Assert(grinVisual, "grinVisual is missing");
+        Debug.Assert(slashHitPosition, "slashHitPosition is missing");
         Debug.Assert(bulletSpawnPosition, "bulletSpawnPosition is missing");
         Debug.Assert(muzzleFlashEffect, "muzzleFlashEffect is missing");
         Debug.Assert(bulletPrefab, "bulletPrefab is empty");
         // Connect event
         grinVisual.AnimationFinished.AddListener(OnAnimationFinished);
+        grinVisual.SlashHitTriggered.AddListener(OnSlashHitTriggered);
         // Initialize
         muzzleFlashEffect.SetActive(false);
     }
@@ -48,12 +57,23 @@ public class GrinAttack : MonoBehaviour
     public void SlashAttack()
     {
         isSlashAnimationFinished = false;
-        StartCoroutine(SlashSequence());
+        currentCoroutine = StartCoroutine(SlashSequence());
     }
 
     public void ShootAttack()
     {
-        StartCoroutine(ShootSequence());
+        currentCoroutine = StartCoroutine(ShootSequence());
+    }
+
+    public void StopAttack()
+    {
+        if (!currentCoroutine.IsUnityNull())
+        {
+            StopCoroutine(currentCoroutine);
+            rb.linearVelocity = Vector2.zero;
+            grinVisual.DoIdle();
+            muzzleFlashEffect.SetActive(false);
+        }
     }
 
     private IEnumerator SlashSequence()
@@ -91,6 +111,7 @@ public class GrinAttack : MonoBehaviour
         });
         // Attack finished
         grinVisual.DoIdle();
+        currentCoroutine = null;
         AttackFinished?.Invoke();
     }
 
@@ -127,6 +148,8 @@ public class GrinAttack : MonoBehaviour
                     bulletSpawnPosition.transform.position,
                     bulletSpawnPosition.transform.rotation
                 );
+                SetSpreadDirection(bulletInstance.transform, bulletSpawnPosition.transform);
+                bulletInstance.damage = shootDamage;
                 nextShootTime = Time.time + (1.0f / shootRate);
                 currentShootAmount++;
             }
@@ -144,6 +167,7 @@ public class GrinAttack : MonoBehaviour
         muzzleFlashEffect.SetActive(false);
         // Attack finished
         grinVisual.DoIdle();
+        currentCoroutine = null;
         AttackFinished?.Invoke();
     }
     #endregion
@@ -155,6 +179,45 @@ public class GrinAttack : MonoBehaviour
     private void OnAnimationFinished(string animationName)
     {
         if (animationName == grinVisual.slashAnimationName) isSlashAnimationFinished = true;
+    }
+
+    private void OnSlashHitTriggered()
+    {
+        RaycastHit hit;
+        bool isHit = Physics.Raycast(
+            slashHitPosition.position, slashHitPosition.forward, out hit, slashRange
+        );
+        if (isHit)
+        {
+            IDamageable damageable = hit.transform.GetComponent<IDamageable>();
+            if (!damageable.IsUnityNull())
+            {
+                damageable.ReceiveDamage(slashDamage);
+            }
+        }
+    }
+    #endregion
+
+    // ====================================================================================================
+    //                     Helper Functions
+    // ====================================================================================================
+    #region Helper
+    private void SetSpreadDirection(Transform bulletTransform, Transform spawnTransform)
+    {
+        // Set constant
+        const float SPREAD_LOOK_DISTANCE = 10f;
+        // Calculate offset
+        float offsetMagnitude = Random.Range(0f, shootMaxSpread * Mathf.Deg2Rad);
+        Vector2 spreadDirection = Random.insideUnitCircle.normalized;
+        Vector3 offsetDirectionX = spawnTransform.right * spreadDirection.x * offsetMagnitude;
+        Vector3 offsetDirectionY = spawnTransform.up * spreadDirection.y * offsetMagnitude;
+        Vector3 offset = offsetDirectionX + offsetDirectionY;
+        // Get look position
+        Vector3 lookPosition = spawnTransform.position;
+        lookPosition += spawnTransform.forward.normalized * SPREAD_LOOK_DISTANCE;
+        lookPosition += offset;
+        // Set bullet rotation
+        bulletTransform.LookAt(lookPosition);
     }
     #endregion
 }

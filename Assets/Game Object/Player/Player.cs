@@ -6,8 +6,12 @@ public class Player : MonoBehaviour, IDamageable
 
     [Header("Component and Object")]
     [SerializeField] private CameraMovementFPS cameraMovementFPS;
+    [SerializeField] private VolumeAnimationHandler volumeAnimationHandler;
+    [Header("Player Data")]
+    [SerializeField] private int maxHealth = 100;
 
     private bool isCursorLocked = true;
+    public float currentHealth {private set; get;}
 
     // ====================================================================================================
     //                     Virtual Functions
@@ -21,11 +25,13 @@ public class Player : MonoBehaviour, IDamageable
     {
         // Assertion check
         Debug.Assert(cameraMovementFPS, "cameraMovementFPS is missing");
+        Debug.Assert(volumeAnimationHandler, "volumeAnimationHandler is missing");
         // Connect events
         InputHandler.Instance.OnCursorTogglePressed.AddListener(ToggleCursorLock);
         // Initialize
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        currentHealth = maxHealth;
     }
     #endregion
 
@@ -35,7 +41,9 @@ public class Player : MonoBehaviour, IDamageable
     #region Damageable
     public void ReceiveDamage(int damageAmount)
     {
-        Debug.Log("player damaged");
+        currentHealth = Mathf.Max(currentHealth - damageAmount, 0);
+        volumeAnimationHandler.DoVignettePulse();
+        if (currentHealth <= 0) Debug.Log("Player dead");
     }
     #endregion
 

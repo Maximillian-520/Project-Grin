@@ -147,6 +147,7 @@ MonoBehaviour:
   fireRate: 8
   maxSpread: 1.2
   bulletHitEffectPrefab: {fileID: 8744587698678318488, guid: 516f0e916beb67348a889b4374248ab9, type: 3}
+  bulletEnemyHitEffectPrefab: {fileID: 8744587698678318488, guid: cf3ab53b9a06ced42bc4d13e34692c4a, type: 3}
   bulletHitEffectDuration: 0.5
 --- !u!1 &1378030140334599566
 GameObject:
@@ -425,6 +426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraMovementFPS: {fileID: 7765020095596310791}
+  maxHealth: 100
 --- !u!114 &5623809480459196554
 MonoBehaviour:
   m_ObjectHideFlags: 0

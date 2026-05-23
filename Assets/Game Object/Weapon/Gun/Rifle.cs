@@ -12,7 +12,9 @@ public class Rifle : BaseWeapon
     [Header("Gun Data")]
     [SerializeField] private int fireRate = 6;
     [SerializeField] private float maxSpread = 9f;
+    [SerializeField] private int damage = 5;
     [SerializeField] private GameObject bulletHitEffectPrefab;
+    [SerializeField] private GameObject bulletEnemyHitEffectPrefab;
     [SerializeField] private float bulletHitEffectDuration = 0.5f;
 
     private float nextFireTime = -1f;
@@ -27,6 +29,7 @@ public class Rifle : BaseWeapon
         Debug.Assert(fpsCamera, "fpsCamera is missing");
         Debug.Assert(muzzleFlashEffect, "muzzleFlashEffect is missing");
         Debug.Assert(bulletHitEffectPrefab, "bulletHitEffectPrefab is empty");
+        Debug.Assert(bulletEnemyHitEffectPrefab, "bulletEnemyHitEffectPrefab is missing");
         // Initialize
         muzzleFlashEffect.SetActive(false);
     }
@@ -57,11 +60,21 @@ public class Rifle : BaseWeapon
         {
             // Check for damageable
             IDamageable damageable = hit.transform.GetComponent<IDamageable>();
-            if (!damageable.IsUnityNull()) damageable.ReceiveDamage(0);
+            if (!damageable.IsUnityNull()) damageable.ReceiveDamage(damage);
             // Spawn bullet hit effect
-            GameObject bulletHitEffectInstance = Instantiate(
-                bulletHitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal)
-            );
+            GameObject bulletHitEffectInstance;
+            if (!damageable.IsUnityNull())
+            {
+                bulletHitEffectInstance = Instantiate(
+                    bulletEnemyHitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal)
+                );
+            }
+            else
+            {
+                bulletHitEffectInstance = Instantiate(
+                    bulletHitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal)
+                );
+            }
             Destroy(bulletHitEffectInstance, bulletHitEffectDuration);
         }
         // Set fire time

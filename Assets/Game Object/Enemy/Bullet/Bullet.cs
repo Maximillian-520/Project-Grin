@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     [Header("Attack Data")]
     [SerializeField] private float speed = 10f;
+    public int damage;
 
     // ====================================================================================================
     //                     Virtual Functions
@@ -26,7 +27,7 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         IDamageable damageable = other.transform.GetComponent<IDamageable>();
-        if (!damageable.IsUnityNull()) damageable.ReceiveDamage(0);
+        if (!damageable.IsUnityNull()) damageable.ReceiveDamage(damage);
         Destroy(gameObject);
     }
     #endregion

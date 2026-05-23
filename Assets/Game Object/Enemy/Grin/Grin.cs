@@ -4,12 +4,17 @@ public class Grin : MonoBehaviour, IDamageable
 {
     [Header("Component and Object")]
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private Collider colliderBody;
     [SerializeField] private GrinAttack grinAttack;
-    [Header("Behavior Data")]
+    [SerializeField] private GrinVisual grinVisual;
+    [Header("Enemy Data")]
+    [SerializeField] private int maxHealth = 100;
     [SerializeField] private float idleTime = 3.0f;
     [Tooltip("Distance to player that determine the next attack")]
     [SerializeField] private float attackDistanceThreshold = 10f;
 
+    public float currentHealth {private set; get;}
+    private bool isAlive = true;
     private float idleTimer;
 
     // ====================================================================================================
@@ -20,15 +25,20 @@ public class Grin : MonoBehaviour, IDamageable
     {
         // Assertion check
         Debug.Assert(rb, "rb is missing");
+        Debug.Assert(colliderBody, "colliderBody is missing");
         Debug.Assert(grinAttack, "grinAttack is missing");
+        Debug.Assert(grinVisual, "grinVisual is missing");
         // Connect event
         grinAttack.AttackFinished.AddListener(()=>{idleTimer = idleTime;});
         // Initialize
+        currentHealth = maxHealth;
         idleTimer = idleTime;
     }
 
     private void Update()
     {
+        // Check is alive
+        if (!isAlive) return;
         // Update idle timer
         if (idleTimer > 0)
         {
@@ -53,14 +63,15 @@ public class Grin : MonoBehaviour, IDamageable
     #region Damageable
     public void ReceiveDamage(int damageAmount)
     {
-        Debug.Log("enemy damaged");
+        currentHealth = Mathf.Max(currentHealth - damageAmount, 0);
+        if (currentHealth <= 0) DoDie();
     }
     #endregion
 
     // ====================================================================================================
-    //                     Behavior Functions
+    //                     Enemy Functions
     // ====================================================================================================
-    #region Behavior
+    #region Enemy
     private void DoAttack()
     {
         float distanceToPlayer = MathUtility.GetDistance(
@@ -68,6 +79,14 @@ public class Grin : MonoBehaviour, IDamageable
         );
         if (distanceToPlayer < attackDistanceThreshold) grinAttack.ShootAttack();
         else grinAttack.SlashAttack();
+    }
+
+    private void DoDie()
+    {
+        colliderBody.enabled = false;
+        grinAttack.StopAttack();
+        grinVisual.DoDie();
+        isAlive = false;
     }
     #endregion
 }
