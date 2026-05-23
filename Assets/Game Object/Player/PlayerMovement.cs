@@ -57,7 +57,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleJump()
     {
-        if (inputHandler.jumpInput && groundCheck.isOnGround)
+        if (Cursor.lockState != CursorLockMode.Locked) {}
+        else if (inputHandler.jumpInput && groundCheck.isOnGround)
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
@@ -67,7 +68,8 @@ public class PlayerMovement : MonoBehaviour
     private void HandleSpeedChange()
     {
         float targetSpeed;
-        if (inputHandler.moveInput == Vector2.zero) targetSpeed = 0;
+        if (Cursor.lockState != CursorLockMode.Locked) targetSpeed = 0;
+        else if (inputHandler.moveInput == Vector2.zero) targetSpeed = 0;
         else if (inputHandler.sprintInput) targetSpeed = sprintSpeed;
         else targetSpeed = walkSpeed;
         currentSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * Time.deltaTime);

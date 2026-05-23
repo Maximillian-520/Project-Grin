@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
+    public static Player Instance {private set; get;}
+
     [Header("Component and Object")]
     [SerializeField] private CameraMovementFPS cameraMovementFPS;
 
@@ -11,6 +13,10 @@ public class Player : MonoBehaviour
     //                     Virtual Functions
     // ====================================================================================================
     #region Virtual
+    private void Awake() {Instance = this;}
+
+    private void OnDestroy() {Instance = null;}
+
     private void Start()
     {
         // Assertion check
@@ -20,6 +26,16 @@ public class Player : MonoBehaviour
         // Initialize
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+    #endregion
+
+    // ====================================================================================================
+    //                     Damageable Functions
+    // ====================================================================================================
+    #region Damageable
+    public void ReceiveDamage(int damageAmount)
+    {
+        Debug.Log("player damaged");
     }
     #endregion
 

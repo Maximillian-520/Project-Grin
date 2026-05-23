@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Rifle : BaseWeapon
@@ -54,9 +55,9 @@ public class Rifle : BaseWeapon
         );
         if (isHit)
         {
-
-            // Debug.Log(hit.transform.name);
-            
+            // Check for damageable
+            IDamageable damageable = hit.transform.GetComponent<IDamageable>();
+            if (!damageable.IsUnityNull()) damageable.ReceiveDamage(0);
             // Spawn bullet hit effect
             GameObject bulletHitEffectInstance = Instantiate(
                 bulletHitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal)
