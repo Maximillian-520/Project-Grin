@@ -7,6 +7,7 @@ public class Player : MonoBehaviour, IDamageable
     [Header("Component and Object")]
     [SerializeField] private CameraMovementFPS cameraMovementFPS;
     [SerializeField] private VolumeAnimationHandler volumeAnimationHandler;
+    [SerializeField] private BarUI healthBarUI;
     [Header("Player Data")]
     [SerializeField] private int maxHealth = 100;
 
@@ -26,12 +27,14 @@ public class Player : MonoBehaviour, IDamageable
         // Assertion check
         Debug.Assert(cameraMovementFPS, "cameraMovementFPS is missing");
         Debug.Assert(volumeAnimationHandler, "volumeAnimationHandler is missing");
+        Debug.Assert(healthBarUI, "healthBarUI is missing");
         // Connect events
         InputHandler.Instance.OnCursorTogglePressed.AddListener(ToggleCursorLock);
         // Initialize
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         currentHealth = maxHealth;
+        healthBarUI.UpdateBar(1.0f);
     }
     #endregion
 
@@ -42,6 +45,7 @@ public class Player : MonoBehaviour, IDamageable
     public void ReceiveDamage(int damageAmount)
     {
         currentHealth = Mathf.Max(currentHealth - damageAmount, 0);
+        healthBarUI.UpdateBar((float)currentHealth / (float)maxHealth);
         volumeAnimationHandler.DoVignettePulse();
         if (currentHealth <= 0) Debug.Log("Player dead");
     }

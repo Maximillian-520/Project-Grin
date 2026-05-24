@@ -7,6 +7,7 @@ public class Grin : MonoBehaviour, IDamageable
     [SerializeField] private Collider colliderBody;
     [SerializeField] private GrinAttack grinAttack;
     [SerializeField] private GrinVisual grinVisual;
+    [SerializeField] private BarUI healthBarUI;
     [Header("Enemy Data")]
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private float idleTime = 3.0f;
@@ -28,11 +29,13 @@ public class Grin : MonoBehaviour, IDamageable
         Debug.Assert(colliderBody, "colliderBody is missing");
         Debug.Assert(grinAttack, "grinAttack is missing");
         Debug.Assert(grinVisual, "grinVisual is missing");
+        Debug.Assert(healthBarUI, "healthBarUI is missing");
         // Connect event
         grinAttack.AttackFinished.AddListener(()=>{idleTimer = idleTime;});
         // Initialize
         currentHealth = maxHealth;
         idleTimer = idleTime;
+        healthBarUI.UpdateBar(1.0f);
     }
 
     private void Update()
@@ -64,6 +67,7 @@ public class Grin : MonoBehaviour, IDamageable
     public void ReceiveDamage(int damageAmount)
     {
         currentHealth = Mathf.Max(currentHealth - damageAmount, 0);
+        healthBarUI.UpdateBar((float)currentHealth / (float)maxHealth);
         if (currentHealth <= 0) DoDie();
     }
     #endregion
