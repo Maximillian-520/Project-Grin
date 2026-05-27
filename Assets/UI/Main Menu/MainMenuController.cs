@@ -1,18 +1,19 @@
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 /// <summary>
 /// This script is a template for main menu controller.
 /// Used for managing main menu flow and events.
 /// Please rewrite this script as needed!
 /// </summary>
+
 public class MainMenuController : MonoBehaviour
 {
     [Header("Component and Object")]
     [SerializeField] private GameObject mainContent;
     [SerializeField] private GameObject settingsContent;
     [SerializeField] private GameObject creditsContent;
+    [SerializeField] private LoadingUI loadingUI;
     [Header("Main Menu")]
     [SerializeField] private string playLoadSceneName = "GameScene";
     [SerializeField] private string mainMenuMusicName = "MainMenu";
@@ -27,6 +28,7 @@ public class MainMenuController : MonoBehaviour
         Debug.Assert(mainContent, "mainContent is missing");
         Debug.Assert(settingsContent, "settingsContent is missing");
         Debug.Assert(creditsContent, "creditsContent is missing");
+        Debug.Assert(loadingUI, "loadingUI is missing");
         // Initialize
         mainContent.SetActive(true);
         settingsContent.SetActive(false);
@@ -41,7 +43,8 @@ public class MainMenuController : MonoBehaviour
     // Button pressed event function, used to load game scene
     public void OnPlay()
     {
-        SceneManager.LoadScene(playLoadSceneName);
+        GameSceneManager.Instance.LoadScene(playLoadSceneName);
+        loadingUI.OpenLoadingUI();
     }
 
     // Button pressed event function, used to open settings content
