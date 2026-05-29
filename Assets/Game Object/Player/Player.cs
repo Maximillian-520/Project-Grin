@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour, IDamageable
 {
+    public UnityEvent PlayerDied;
+
     public static Player Instance {private set; get;}
 
     [Header("Component and Object")]
@@ -11,6 +14,7 @@ public class Player : MonoBehaviour, IDamageable
     [Header("Player Data")]
     [SerializeField] private int maxHealth = 100;
 
+    private bool isEnabled = false;
     private bool isCursorLocked = true;
     public float currentHealth {private set; get;}
 
@@ -31,8 +35,7 @@ public class Player : MonoBehaviour, IDamageable
         // Connect events
         InputHandler.Instance.OnCursorTogglePressed.AddListener(ToggleCursorLock);
         // Initialize
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        EnablePlayer();
         currentHealth = maxHealth;
         healthBarUI.UpdateBar(1.0f);
     }
@@ -44,10 +47,15 @@ public class Player : MonoBehaviour, IDamageable
     #region Damageable
     public void ReceiveDamage(int damageAmount)
     {
+        if (currentHealth <= 0) return;
         currentHealth = Mathf.Max(currentHealth - damageAmount, 0);
         healthBarUI.UpdateBar((float)currentHealth / (float)maxHealth);
         volumeAnimationHandler.DoVignettePulse();
-        if (currentHealth <= 0) Debug.Log("Player dead");
+        if (currentHealth <= 0)
+        {
+            UnlockCursor();
+            PlayerDied?.Invoke();
+        }
     }
     #endregion
 
@@ -57,22 +65,40 @@ public class Player : MonoBehaviour, IDamageable
     #region Cursor
     private void ToggleCursorLock()
     {
-        if (isCursorLocked)
-        {
-            // Unlock
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            cameraMovementFPS.enabled = false;
-            isCursorLocked = false;
-        }
-        else
-        {
-            // Lock
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            cameraMovementFPS.enabled = true;
-            isCursorLocked = true;
-        }
+        if (isCursorLocked) UnlockCursor();
+        else LockCursor();
+    }
+
+    private void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        cameraMovementFPS.enabled = true;
+        isCursorLocked = true;
+    }
+
+    private void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        cameraMovementFPS.enabled = false;
+        isCursorLocked = false;
+    }
+    #endregion
+
+    // ====================================================================================================
+    //                     Player Functions
+    // ====================================================================================================
+    #region Player
+    public void EnablePlayer()
+    {
+        isEnabled = true;
+        LockCursor();
+    }
+
+    public void DisablePlayer() {
+        isEnabled = false;
+        UnlockCursor();
     }
     #endregion
 }

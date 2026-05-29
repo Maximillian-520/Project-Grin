@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Grin : MonoBehaviour, IDamageable
 {
+    public UnityEvent EnemyDied;
+
     [Header("Component and Object")]
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Collider colliderBody;
@@ -14,8 +17,8 @@ public class Grin : MonoBehaviour, IDamageable
     [Tooltip("Distance to player that determine the next attack")]
     [SerializeField] private float attackDistanceThreshold = 10f;
 
+    private bool isEnabled = false;
     public float currentHealth {private set; get;}
-    private bool isAlive = true;
     private float idleTimer;
 
     // ====================================================================================================
@@ -41,7 +44,7 @@ public class Grin : MonoBehaviour, IDamageable
     private void Update()
     {
         // Check is alive
-        if (!isAlive) return;
+        if (!isEnabled) return;
         // Update idle timer
         if (idleTimer > 0)
         {
@@ -68,7 +71,11 @@ public class Grin : MonoBehaviour, IDamageable
     {
         currentHealth = Mathf.Max(currentHealth - damageAmount, 0);
         healthBarUI.UpdateBar((float)currentHealth / (float)maxHealth);
-        if (currentHealth <= 0) DoDie();
+        if (currentHealth <= 0)
+        {
+            EnemyDied?.Invoke();
+            DoDie();
+        }
     }
     #endregion
 
@@ -76,6 +83,10 @@ public class Grin : MonoBehaviour, IDamageable
     //                     Enemy Functions
     // ====================================================================================================
     #region Enemy
+    public void EnableEnemy() {isEnabled = true;}
+
+    public void DisableEnemy() {isEnabled = false;}
+
     private void DoAttack()
     {
         float distanceToPlayer = MathUtility.GetDistance(
@@ -90,7 +101,7 @@ public class Grin : MonoBehaviour, IDamageable
         colliderBody.enabled = false;
         grinAttack.StopAttack();
         grinVisual.DoDie();
-        isAlive = false;
+        isEnabled = false;
     }
     #endregion
 }
