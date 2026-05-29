@@ -6484,7 +6484,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &377077276
 Transform:
   m_ObjectHideFlags: 0
@@ -24032,10 +24032,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4610133753171163943, guid: c110ada64feaf10408477f339f077e55, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c110ada64feaf10408477f339f077e55, type: 3}
 --- !u!4 &1441952229 stripped
 Transform:
@@ -34770,6 +34767,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2641457372762571690, guid: 711d49316d3711c438872873ac78c29c, type: 3}
+      propertyPath: maxHealth
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2641457372762571690, guid: 711d49316d3711c438872873ac78c29c, type: 3}
       propertyPath: healthBarUI
       value: 
       objectReference: {fileID: 473338776}
@@ -34916,10 +34917,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4610133753171163943, guid: c110ada64feaf10408477f339f077e55, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c110ada64feaf10408477f339f077e55, type: 3}
 --- !u!1001 &5029070758799506283
 PrefabInstance:

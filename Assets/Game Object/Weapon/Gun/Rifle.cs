@@ -3,14 +3,11 @@ using UnityEngine;
 
 public class Rifle : BaseWeapon
 {
-    const float EFFECT_BUFFER_DURATION = 0.1f;
-
     [Header("Component and Object")]
     [SerializeField] private Camera fpsCamera;
-    [SerializeField] private GameObject muzzleFlashEffect;
-
+    [SerializeField] private ParticleSystem muzzleFlashEffect;
     [Header("Gun Data")]
-    [SerializeField] private int fireRate = 6;
+    [SerializeField] private float fireRate = 6;
     [SerializeField] private float maxSpread = 9f;
     [SerializeField] private int damage = 5;
     [SerializeField] private GameObject bulletHitEffectPrefab;
@@ -30,14 +27,6 @@ public class Rifle : BaseWeapon
         Debug.Assert(muzzleFlashEffect, "muzzleFlashEffect is missing");
         Debug.Assert(bulletHitEffectPrefab, "bulletHitEffectPrefab is empty");
         Debug.Assert(bulletEnemyHitEffectPrefab, "bulletEnemyHitEffectPrefab is missing");
-        // Initialize
-        muzzleFlashEffect.SetActive(false);
-    }
-
-    private void FixedUpdate()
-    {
-        // Update muzzle flash effect
-        muzzleFlashEffect.SetActive(Time.time < nextFireTime + EFFECT_BUFFER_DURATION);
     }
     #endregion
 
@@ -77,6 +66,7 @@ public class Rifle : BaseWeapon
             }
             Destroy(bulletHitEffectInstance, bulletHitEffectDuration);
         }
+        muzzleFlashEffect.Play(true);
         // Set fire time
         nextFireTime = Time.time + (1.0f / (float)fireRate);
     }
