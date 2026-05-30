@@ -1,20 +1,25 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Rifle : BaseWeapon
 {
+    public UnityEvent GunAmmoEmptied;
+
     [Header("Component and Object")]
     [SerializeField] private Camera fpsCamera;
     [SerializeField] private ParticleSystem muzzleFlashEffect;
     [Header("Gun Data")]
     [SerializeField] private float fireRate = 6;
     [SerializeField] private float maxSpread = 9f;
+    [SerializeField] public int maxAmmo {private set; get;} = 40;
     [SerializeField] private int damage = 5;
     [SerializeField] private GameObject bulletHitEffectPrefab;
     [SerializeField] private GameObject bulletEnemyHitEffectPrefab;
     [SerializeField] private float bulletHitEffectDuration = 0.5f;
 
     private float nextFireTime = -1f;
+    private int currentAmmo = 0;
 
     // ====================================================================================================
     //                     Virtual Functions
@@ -38,11 +43,17 @@ public class Rifle : BaseWeapon
     {
         // Check can fire
         if (Time.time < nextFireTime) return;
+        if (currentAmmo <= 0)
+        {
+            nextFireTime = Time.time + (1.0f / (float)fireRate);
+            GunAmmoEmptied?.Invoke();
+            return;
+        }
         // Fire
         RaycastHit hit;
         bool isHit = Physics.Raycast(
             fpsCamera.transform.position,
-            fpsCamera.transform.forward + GetSpreadOffset(fpsCamera.transform),
+            fpsCamera.transform.forward + GetSpreadOffset(fpsCamera.transform, maxSpread),
             out hit
         );
         if (isHit)
@@ -67,17 +78,17 @@ public class Rifle : BaseWeapon
             Destroy(bulletHitEffectInstance, bulletHitEffectDuration);
         }
         muzzleFlashEffect.Play(true);
-        // Set fire time
+        // Set variables
         nextFireTime = Time.time + (1.0f / (float)fireRate);
+        currentAmmo--;
+        // Check ammo
+        if (currentAmmo <= 0) GunAmmoEmptied?.Invoke();
     }
 
-    private Vector3 GetSpreadOffset(Transform fpsTransform)
+    public void Reload()
     {
-        float offsetMagnitude = Random.Range(0f, maxSpread * Mathf.Deg2Rad);
-        Vector2 spreadDirection = Random.insideUnitCircle.normalized;
-        Vector3 offsetDirectionX = fpsTransform.right * spreadDirection.x * offsetMagnitude;
-        Vector3 offsetDirectionY = fpsTransform.up * spreadDirection.y * offsetMagnitude;
-        return offsetDirectionX + offsetDirectionY;
+        nextFireTime = Time.time;
+        currentAmmo = maxAmmo;
     }
     #endregion
 }

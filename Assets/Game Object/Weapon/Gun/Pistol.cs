@@ -42,7 +42,7 @@ public class Pistol : BaseWeapon
         RaycastHit hit;
         bool isHit = Physics.Raycast(
             fpsCamera.transform.position,
-            fpsCamera.transform.forward + GetSpreadOffset(fpsCamera.transform),
+            fpsCamera.transform.forward + GetSpreadOffset(fpsCamera.transform, maxSpread),
             out hit
         );
         if (isHit)
@@ -69,15 +69,6 @@ public class Pistol : BaseWeapon
         muzzleFlashEffect.Play(true);
         // Set fire time
         nextFireTime = Time.time + (1.0f / (float)fireRate);
-    }
-
-    private Vector3 GetSpreadOffset(Transform fpsTransform)
-    {
-        float offsetMagnitude = Random.Range(0f, maxSpread * Mathf.Deg2Rad);
-        Vector2 spreadDirection = Random.insideUnitCircle.normalized;
-        Vector3 offsetDirectionX = fpsTransform.right * spreadDirection.x * offsetMagnitude;
-        Vector3 offsetDirectionY = fpsTransform.up * spreadDirection.y * offsetMagnitude;
-        return offsetDirectionX + offsetDirectionY;
     }
     #endregion
 }

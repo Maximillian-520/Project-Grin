@@ -36,8 +36,18 @@ public class WeaponController : MonoBehaviour
     #region Weapon
     public void TriggerWeapon() {currentWeapon.Trigger();}
 
+    public void ChangeToWeapon(BaseWeapon newWeapon)
+    {
+        // Get check weapon
+        if (weaponList.IndexOf(newWeapon) == -1) return;
+        // Switch to new weapon
+        if (!currentWeapon.IsUnityNull()) {currentWeapon.gameObject.SetActive(false);}
+        newWeapon.gameObject.SetActive(true);
+        currentWeapon = newWeapon;
+    }
+
     // Change to the next weapon on the list
-    public void ChangeWeapon(bool isInverted)
+    public void ChangeToNextWeapon(bool isInverted)
     {
         // Get new weapon
         if (isInverted)
