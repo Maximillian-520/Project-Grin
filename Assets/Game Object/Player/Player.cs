@@ -14,6 +14,9 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private BarUI healthBarUI;
     [Header("Player Data")]
     [SerializeField] private int maxHealth = 100;
+    [Header("Audio Settings")]
+    [SerializeField] private string injuredAudioName = "Player Injured";
+    [SerializeField] private string diedAudioName = "Player Died";
 
     private bool isEnabled = false;
     private bool isCursorLocked = true;
@@ -53,6 +56,8 @@ public class Player : MonoBehaviour, IDamageable
         currentHealth = Mathf.Max(currentHealth - damageAmount, 0);
         healthBarUI.UpdateBar((float)currentHealth / (float)maxHealth);
         volumeAnimationHandler.DoVignettePulse();
+        if (currentHealth > 0) AudioManager.Instance.PlaySFX(injuredAudioName);
+        else AudioManager.Instance.PlaySFX(diedAudioName);
         if (currentHealth <= 0)
         {
             UnlockCursor();

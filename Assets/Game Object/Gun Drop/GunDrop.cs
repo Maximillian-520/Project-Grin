@@ -10,6 +10,9 @@ public class GunDrop : MonoBehaviour
     [Header("Gun Drop Settings")]
     [SerializeField] private float despawnTime = 9f;
     [SerializeField] private float flickerTime = 6f;
+    [Header("Audio Settings")]
+    [SerializeField] private string rifleGunDropAudioName = "Rifle Gun Drop";
+    [SerializeField] private string shotgunGunDropAudioName = "Shotgun Gun Drop";
 
     private bool isHoldingRifle = false;
     private bool isHoldingShotgun = false;
@@ -53,8 +56,18 @@ public class GunDrop : MonoBehaviour
         PlayerWeapon playerWeapon = other.gameObject.GetComponent<PlayerWeapon>();
         if (!playerWeapon.IsUnityNull())
         {
-            if (isHoldingRifle) playerWeapon.HoldRifle();
-            if (isHoldingShotgun) playerWeapon.HoldShotgun();
+            if (isHoldingRifle)
+            {
+                // Rifle
+                playerWeapon.HoldRifle();
+                AudioManager.Instance.PlaySFX(rifleGunDropAudioName);
+            }
+            if (isHoldingShotgun)
+            {
+                // Shotgun
+                playerWeapon.HoldShotgun();
+                AudioManager.Instance.PlaySFX(shotgunGunDropAudioName);
+            }
             Destroy(gameObject);
         }
     }

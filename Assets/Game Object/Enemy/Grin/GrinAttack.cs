@@ -25,6 +25,9 @@ public class GrinAttack : MonoBehaviour
     [SerializeField] private float shootRate = 8;
     [SerializeField] private float shootMaxSpread = 9f;
     [SerializeField] private int shootDamage = 10;
+    [Header("Audio Settings")]
+    [SerializeField] private string slashAudioName = "Slash Enemy";
+    [SerializeField] private string shootAudioName = "Rifle Enemy";
 
     private Coroutine currentCoroutine;
     private bool isSlashAnimationFinished = false;
@@ -104,6 +107,7 @@ public class GrinAttack : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
         // Slash player
         grinVisual.DoSlash();
+        AudioManager.Instance.PlaySFX(slashAudioName);
         yield return new WaitUntil(() =>
         {
             rb.linearVelocity = Vector3.zero;
@@ -152,6 +156,7 @@ public class GrinAttack : MonoBehaviour
                 bulletInstance.damage = shootDamage;
                 nextShootTime = Time.time + (1.0f / shootRate);
                 currentShootAmount++;
+                AudioManager.Instance.PlaySFX(shootAudioName);
             }
             // Update velocity and rotation
             Vector3 direction = MathUtility.GetDirection(

@@ -67,6 +67,6 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Project GRIN.slnx",
+    "dotnet.defaultSolution": "Project Grin.slnx",
     "dotnet.enableWorkspaceBasedDevelopment": false
 }

@@ -312,8 +312,86 @@ MonoBehaviour:
   musicVolumeParameterName: MusicVolume
   sfxVolumeParameterName: SFXVolume
   audioInstancePrefab: {fileID: 3104286111301011594, guid: 111ae2f095e85934e981a7cbb7352ca1, type: 3}
-  musicAudioDataList: []
-  sfxAudioDataList: []
+  musicAudioDataList:
+  - name: Main Music
+    audioClip: {fileID: 8300000, guid: 69473d7450025bc43a10c6c13b555616, type: 3}
+    volume: 1
+    pitch: 1
+    minPitch: 0
+    maxPitch: 0
+  - name: Menu Music
+    audioClip: {fileID: 8300000, guid: f0b9d6f56a4b72146ae8e1d7ea4dbeb7, type: 3}
+    volume: 1
+    pitch: 1
+    minPitch: 0
+    maxPitch: 0
+  sfxAudioDataList:
+  - name: Button Hover
+    audioClip: {fileID: 8300000, guid: 2e5418979dfdc26498d790db6eba74bb, type: 3}
+    volume: 1
+    pitch: 1.5
+    minPitch: 0
+    maxPitch: 0
+  - name: Button Pressed
+    audioClip: {fileID: 8300000, guid: 17278d7cfe33c474fae1b944ae8f34a1, type: 3}
+    volume: 1
+    pitch: 0.8
+    minPitch: 0
+    maxPitch: 0
+  - name: Rifle Shot
+    audioClip: {fileID: 8300000, guid: 276f4cc00c3fd6848892b3f7bcb515d3, type: 3}
+    volume: 1
+    pitch: 1
+    minPitch: 0
+    maxPitch: 0
+  - name: Rifle Gun Drop
+    audioClip: {fileID: 8300000, guid: 35c35788537e11c4eb94f7b1724b2b04, type: 3}
+    volume: 1
+    pitch: 1
+    minPitch: 0
+    maxPitch: 0
+  - name: Rifle Enemy
+    audioClip: {fileID: 8300000, guid: eb84bbc6b151506439ff891bfeb518bb, type: 3}
+    volume: 1
+    pitch: 1
+    minPitch: 0
+    maxPitch: 0
+  - name: Shotgun Shot
+    audioClip: {fileID: 8300000, guid: 6b4c7959aa5ab4c40863be3aca842335, type: 3}
+    volume: 1
+    pitch: 1
+    minPitch: 0
+    maxPitch: 0
+  - name: Shotgun Gun Drop
+    audioClip: {fileID: 8300000, guid: e35937c52a6102d479808299669d783b, type: 3}
+    volume: 1
+    pitch: 1
+    minPitch: 0
+    maxPitch: 0
+  - name: Slash Enemy
+    audioClip: {fileID: 8300000, guid: 24b9be9dbd35dc74288060b2e2502f00, type: 3}
+    volume: 1
+    pitch: 1
+    minPitch: 0
+    maxPitch: 0
+  - name: Player Injured
+    audioClip: {fileID: 8300000, guid: 54067c0e2b0dc7a47940599200498952, type: 3}
+    volume: 1
+    pitch: 1
+    minPitch: 0
+    maxPitch: 0
+  - name: Player Died
+    audioClip: {fileID: 8300000, guid: cb25115c18f81684d8d1493b7c481de9, type: 3}
+    volume: 1
+    pitch: 1
+    minPitch: 0
+    maxPitch: 0
+  - name: Enemy Died
+    audioClip: {fileID: 8300000, guid: 7fe0c5adc1a763f4d91775b70c1ecf61, type: 3}
+    volume: 1
+    pitch: 1
+    minPitch: 0
+    maxPitch: 0
 --- !u!1 &7866501725904230587
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,6 +21,8 @@ public class Shotgun : BaseWeapon
     [SerializeField] private GameObject bulletHitEffectPrefab;
     [SerializeField] private GameObject bulletEnemyHitEffectPrefab;
     [SerializeField] private float bulletHitEffectDuration = 0.5f;
+    [Header("Audio Settings")]
+    [SerializeField] private string gunAudioName = "Shotgun Shot";
 
     private float nextFireTime = -1f;
     private int currentAmmo = 0;
@@ -93,6 +95,7 @@ public class Shotgun : BaseWeapon
             }
         }
         muzzleFlashEffect.Play(true);
+        AudioManager.Instance.PlaySFX(gunAudioName);
         // Set variables
         nextFireTime = Time.time + (1.0f / (float)fireRate);
         currentAmmo--;

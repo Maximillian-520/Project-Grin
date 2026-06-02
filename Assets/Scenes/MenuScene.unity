@@ -524,6 +524,8 @@ MonoBehaviour:
   loadingUI: {fileID: 1941894179}
   playLoadSceneName: GameScene
   mainMenuMusicName: MainMenu
+  menuMusicAudioName: Menu Music
+  musicFadeTime: 0.5
 --- !u!4 &198331090
 Transform:
   m_ObjectHideFlags: 0
@@ -1530,7 +1532,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4610133753171163943, guid: c110ada64feaf10408477f339f077e55, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: c110ada64feaf10408477f339f077e55, type: 3}
 --- !u!4 &611873411 stripped
 Transform:
@@ -2609,7 +2614,7 @@ MonoBehaviour:
         Raw: 0
         Type: 0
       Y:
-        Raw: 270
+        Raw: 217.5
         Type: 0
       Z:
         Raw: 0
@@ -8052,7 +8057,7 @@ MonoBehaviour:
         Raw: 940.97235
         Type: 0
       Y:
-        Raw: 749
+        Raw: 629
         Type: 0
       Z:
         Raw: 0

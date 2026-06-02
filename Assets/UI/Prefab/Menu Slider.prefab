@@ -644,7 +644,7 @@ MonoBehaviour:
   value: 0
   DPadPercentAdjustment: 0.1
   Min: 0
-  Max: 100
+  Max: 1
   unitsFormat: '{0:0.00}'
 --- !u!1 &810717190171321314
 GameObject:

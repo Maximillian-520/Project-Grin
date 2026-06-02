@@ -14,9 +14,12 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private GameObject settingsContent;
     [SerializeField] private GameObject creditsContent;
     [SerializeField] private LoadingUI loadingUI;
-    [Header("Main Menu")]
+    [Header("Main Menu Settings")]
     [SerializeField] private string playLoadSceneName = "GameScene";
     [SerializeField] private string mainMenuMusicName = "MainMenu";
+    [Header("Audio Settings")]
+    [SerializeField] private string menuMusicAudioName = "Menu Music";
+    [SerializeField] private float musicFadeTime = 0.5f;
 
     // ====================================================================================================
     //                     Virtual Functions
@@ -33,6 +36,7 @@ public class MainMenuController : MonoBehaviour
         mainContent.SetActive(true);
         settingsContent.SetActive(false);
         creditsContent.SetActive(false);
+        AudioManager.Instance.PlayMusic(menuMusicAudioName);
     }
     #endregion
 
@@ -45,6 +49,7 @@ public class MainMenuController : MonoBehaviour
     {
         GameSceneManager.Instance.LoadScene(playLoadSceneName);
         loadingUI.OpenLoadingUI();
+        AudioManager.Instance.StopMusic(musicFadeTime);
     }
 
     // Button pressed event function, used to open settings content

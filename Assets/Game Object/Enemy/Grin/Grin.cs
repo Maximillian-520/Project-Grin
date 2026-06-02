@@ -16,6 +16,8 @@ public class Grin : MonoBehaviour, IDamageable
     [SerializeField] private float idleTime = 3.0f;
     [Tooltip("Distance to player that determine the next attack")]
     [SerializeField] private float attackDistanceThreshold = 10f;
+    [Header("Audio Settings")]
+    [SerializeField] private string diedAudioName = "Enemy Died";
 
     private bool isEnabled = false;
     public float currentHealth {private set; get;}
@@ -75,6 +77,7 @@ public class Grin : MonoBehaviour, IDamageable
         {
             EnemyDied?.Invoke();
             DoDie();
+            AudioManager.Instance.PlaySFX(diedAudioName);
         }
     }
     #endregion

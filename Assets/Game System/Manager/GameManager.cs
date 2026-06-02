@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string gameSceneName = "GameScene";
     [SerializeField] private string menuSceneName = "MenuScene";
     [SerializeField] private float gameoverDelayTime = 5.0f;
+    [Header("Audio Settings")]
+    [SerializeField] private string mainMusicAudioName = "Main Music";
+    [SerializeField] private float musicFadeTime = 0.5f;
 
     // ====================================================================================================
     //                     Virtual Functions
@@ -39,6 +42,7 @@ public class GameManager : MonoBehaviour
         });
         // Initialize
         grin.EnableEnemy();
+        AudioManager.Instance.PlayMusic(mainMusicAudioName);
     }
     #endregion
 
@@ -56,6 +60,7 @@ public class GameManager : MonoBehaviour
     {
         GameSceneManager.Instance.LoadScene(menuSceneName);
         loadingUI.OpenLoadingUI();
+        AudioManager.Instance.StopMusic(musicFadeTime);
     }
 
     private void OpenWinScreen() {gameoverUI.OpenWinGameoverUI();}

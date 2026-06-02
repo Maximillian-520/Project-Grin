@@ -437,8 +437,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   normalSFXName: 
-  hoverSFXName: 
-  pressedSFXName: 
+  hoverSFXName: Button Hover
+  pressedSFXName: Button Pressed
 --- !u!1 &6556416694723776978
 GameObject:
   m_ObjectHideFlags: 0
