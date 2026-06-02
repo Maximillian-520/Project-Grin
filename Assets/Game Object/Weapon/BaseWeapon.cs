@@ -6,6 +6,8 @@ public abstract class BaseWeapon : MonoBehaviour
     //                     Weapon Functions
     // ====================================================================================================
     #region Weapon
+    public abstract void Setup();
+    
     public abstract void Trigger();
     #endregion
 

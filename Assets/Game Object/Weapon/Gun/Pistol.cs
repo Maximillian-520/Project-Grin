@@ -34,6 +34,8 @@ public class Pistol : BaseWeapon
     //                     Weapon Functions
     // ====================================================================================================
     #region Weapon
+    public override void Setup() {}
+
     public override void Trigger()
     {
         // Check can fire

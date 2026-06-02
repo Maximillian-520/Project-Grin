@@ -9,6 +9,7 @@ public class Player : MonoBehaviour, IDamageable
 
     [Header("Component and Object")]
     [SerializeField] private CameraMovementFPS cameraMovementFPS;
+    [SerializeField] private PlayerCamera playerCamera;
     [SerializeField] private VolumeAnimationHandler volumeAnimationHandler;
     [SerializeField] private BarUI healthBarUI;
     [Header("Player Data")]
@@ -30,6 +31,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         // Assertion check
         Debug.Assert(cameraMovementFPS, "cameraMovementFPS is missing");
+        Debug.Assert(playerCamera, "playerCamera is missing");
         Debug.Assert(volumeAnimationHandler, "volumeAnimationHandler is missing");
         Debug.Assert(healthBarUI, "healthBarUI is missing");
         // Connect events
@@ -54,6 +56,7 @@ public class Player : MonoBehaviour, IDamageable
         if (currentHealth <= 0)
         {
             UnlockCursor();
+            playerCamera.DoCameraDeath();
             PlayerDied?.Invoke();
         }
     }
@@ -65,6 +68,7 @@ public class Player : MonoBehaviour, IDamageable
     #region Cursor
     private void ToggleCursorLock()
     {
+        if (!isEnabled) return;
         if (isCursorLocked) UnlockCursor();
         else LockCursor();
     }

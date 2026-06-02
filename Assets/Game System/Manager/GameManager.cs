@@ -1,12 +1,11 @@
-using Nova;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [Header("Component and Object")]
     [SerializeField] private Player player;
     [SerializeField] private Grin grin;
+    [SerializeField] private GunDropController gunDropController;
     [SerializeField] private GameoverUI gameoverUI;
     [SerializeField] private LoadingUI loadingUI;
     [Header("Game Settings")]
@@ -23,16 +22,19 @@ public class GameManager : MonoBehaviour
         // Assertion check
         Debug.Assert(player, "player is missing");
         Debug.Assert(grin, "grin is missing");
+        Debug.Assert(gunDropController, "gunDropController is missing");
         Debug.Assert(gameoverUI, "gameoverUI is missing");
         // Connect event
         player.PlayerDied.AddListener(()=>
         {
             grin.DisableEnemy();
+            gunDropController.enabled = false;
             Invoke("OpenLoseScreen", gameoverDelayTime);
         });
         grin.EnemyDied.AddListener(()=>
         {
             player.DisablePlayer();
+            gunDropController.enabled = false;
             Invoke("OpenWinScreen", gameoverDelayTime);
         });
         // Initialize

@@ -23,10 +23,8 @@ public class WeaponController : MonoBehaviour
         // Initialize
         currentWeapon = initialWeapon;
         currentWeaponIndex = weaponList.IndexOf(initialWeapon);
-        foreach (BaseWeapon weapon in weaponList)
-        {
-            weapon.gameObject.SetActive(weapon == currentWeapon);
-        }
+        foreach (BaseWeapon weapon in weaponList) weapon.gameObject.SetActive(weapon == currentWeapon);
+        initialWeapon.Setup();
     }
     #endregion
 
@@ -43,6 +41,7 @@ public class WeaponController : MonoBehaviour
         // Switch to new weapon
         if (!currentWeapon.IsUnityNull()) {currentWeapon.gameObject.SetActive(false);}
         newWeapon.gameObject.SetActive(true);
+        newWeapon.Setup();
         currentWeapon = newWeapon;
     }
 
@@ -60,6 +59,7 @@ public class WeaponController : MonoBehaviour
         // Switch to new weapon
         if (!currentWeapon.IsUnityNull()) {currentWeapon.gameObject.SetActive(false);}
         newWeapon.gameObject.SetActive(true);
+        newWeapon.Setup();
         currentWeapon = newWeapon;
     }
     #endregion

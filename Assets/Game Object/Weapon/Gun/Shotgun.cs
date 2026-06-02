@@ -1,3 +1,4 @@
+using Nova;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,6 +10,8 @@ public class Shotgun : BaseWeapon
     [Header("Component and Object")]
     [SerializeField] private Camera fpsCamera;
     [SerializeField] private ParticleSystem muzzleFlashEffect;
+    [SerializeField] private BarUI ammoBarUI;
+    [SerializeField] private UIBlock crosshair;
     [Header("Gun Data")]
     [SerializeField] private float fireRate = 2;
     [SerializeField] private float maxSpread = 20f;
@@ -31,6 +34,8 @@ public class Shotgun : BaseWeapon
         // Assertion check
         Debug.Assert(fpsCamera, "fpsCamera is missing");
         Debug.Assert(muzzleFlashEffect, "muzzleFlashEffect is missing");
+        Debug.Assert(ammoBarUI, "ammoBarUI is missing");
+        Debug.Assert(crosshair, "crosshair is missing");
         Debug.Assert(bulletHitEffectPrefab, "bulletHitEffectPrefab is empty");
         Debug.Assert(bulletEnemyHitEffectPrefab, "bulletEnemyHitEffectPrefab is missing");
     }
@@ -40,6 +45,12 @@ public class Shotgun : BaseWeapon
     //                     Weapon Functions
     // ====================================================================================================
     #region Weapon
+    public override void Setup()
+    {
+        ammoBarUI.gameObject.SetActive(true);
+        crosshair.gameObject.SetActive(true);
+    }
+
     public override void Trigger()
     {
         // Check can fire
@@ -87,12 +98,14 @@ public class Shotgun : BaseWeapon
         currentAmmo--;
         // Check ammo
         if (currentAmmo <= 0) GunAmmoEmptied?.Invoke();
+        ammoBarUI.UpdateBar((float)currentAmmo / (float)maxAmmo);
     }
 
     public void Reload()
     {
         nextFireTime = Time.time;
         currentAmmo = maxAmmo;
+        ammoBarUI.UpdateBar((float)currentAmmo / (float)maxAmmo);
     }
     #endregion
 }

@@ -10,10 +10,12 @@ public class PlayerMovement : MonoBehaviour
     public float sprintSpeed = 6f;
     public float acceleration = 24f;
     public float jumpForce = 7f;
+    public float jumpDelay = 3f;
 
     private InputHandler inputHandler;
     private Vector3 currentDirection;
     private float currentSpeed;
+    private float nextJumpTime = -1;
 
     // ====================================================================================================
     //                     Virtual Functions
@@ -58,10 +60,11 @@ public class PlayerMovement : MonoBehaviour
     private void HandleJump()
     {
         if (Cursor.lockState != CursorLockMode.Locked) {}
-        else if (inputHandler.jumpInput && groundCheck.isOnGround)
+        else if (inputHandler.jumpInput && groundCheck.isOnGround && Time.time >= nextJumpTime)
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            nextJumpTime = Time.time + jumpDelay;
         }
     }
     

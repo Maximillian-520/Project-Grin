@@ -45,8 +45,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c5e1bd797802fb41b99f587b1a581ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GunAmmoEmptied:
+    m_PersistentCalls:
+      m_Calls: []
   fpsCamera: {fileID: 3167245737836661082}
   muzzleFlashEffect: {fileID: 9066857250733753785}
+  ammoBarUI: {fileID: 0}
+  crosshair: {fileID: 0}
   fireRate: 1.2
   maxSpread: 5
   pellet: 12
@@ -158,9 +163,11 @@ MonoBehaviour:
       m_Calls: []
   fpsCamera: {fileID: 966808201966568237}
   muzzleFlashEffect: {fileID: 7507313381736571095}
+  ammoBarUI: {fileID: 0}
+  crosshair: {fileID: 0}
   fireRate: 8
-  maxSpread: 1.2
-  damage: 5
+  maxSpread: 0.8
+  damage: 6
   bulletHitEffectPrefab: {fileID: 8744587698678318488, guid: 516f0e916beb67348a889b4374248ab9, type: 3}
   bulletEnemyHitEffectPrefab: {fileID: 8744587698678318488, guid: cf3ab53b9a06ced42bc4d13e34692c4a, type: 3}
   bulletHitEffectDuration: 0.5
@@ -208,6 +215,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b41cee86826182499b8d12de27be579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ammoBarUI: {fileID: 0}
+  crosshair: {fileID: 0}
 --- !u!1 &1378030140334599566
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,6 +497,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   cameraMovementFPS: {fileID: 7765020095596310791}
+  playerCamera: {fileID: 7785236712150557878}
   volumeAnimationHandler: {fileID: 0}
   healthBarUI: {fileID: 0}
   maxHealth: 100
@@ -509,6 +519,7 @@ MonoBehaviour:
   sprintSpeed: 8
   acceleration: 20
   jumpForce: 7
+  jumpDelay: 3
 --- !u!114 &7092005115833008955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -538,6 +549,7 @@ GameObject:
   - component: {fileID: 1211956373123395490}
   - component: {fileID: 3759640471833509653}
   - component: {fileID: 7765020095596310791}
+  - component: {fileID: 7785236712150557878}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -686,6 +698,20 @@ MonoBehaviour:
   verticalLookLimit: 90
   invertXAxis: 0
   invertYAxis: 0
+--- !u!114 &7785236712150557878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3880894825303322066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89e053a9a9d8ff64cbcda930850a67af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRotation: -90
+  duration: 1
 --- !u!1 &5344791830131651848
 GameObject:
   m_ObjectHideFlags: 0
