@@ -4,11 +4,28 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
+    [Header("Component and Object")]
+    [SerializeField] private CameraMovementFPS cameraMovementFPS;
     [Header("Camera Death Settings")]
     [SerializeField] private float targetRotation = -90f;
     [SerializeField] private float duration = 1f;
 
     private Tween currentTween;
+
+    // ====================================================================================================
+    //                     Virtual Functions
+    // ====================================================================================================
+    #region Virtual
+    private void Start()
+    {
+        // Assertion check
+        Debug.Assert(cameraMovementFPS, "cameraMovementFPS is missing");
+        // Initialize
+        cameraMovementFPS.sensitivityScale = MouseSettingsController.mouseSensitivity;
+        cameraMovementFPS.invertXAxis = MouseSettingsController.isMouseInverse;
+        cameraMovementFPS.invertYAxis = MouseSettingsController.isMouseInverse;
+    }
+    #endregion
 
     // ====================================================================================================
     //                     Camera Functions

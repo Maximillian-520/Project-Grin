@@ -59,6 +59,7 @@ MonoBehaviour:
   bulletHitEffectPrefab: {fileID: 8744587698678318488, guid: 516f0e916beb67348a889b4374248ab9, type: 3}
   bulletEnemyHitEffectPrefab: {fileID: 8744587698678318488, guid: cf3ab53b9a06ced42bc4d13e34692c4a, type: 3}
   bulletHitEffectDuration: 0.5
+  gunAudioName: Shotgun Shot
 --- !u!1 &350914315626896620
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,6 +172,7 @@ MonoBehaviour:
   bulletHitEffectPrefab: {fileID: 8744587698678318488, guid: 516f0e916beb67348a889b4374248ab9, type: 3}
   bulletEnemyHitEffectPrefab: {fileID: 8744587698678318488, guid: cf3ab53b9a06ced42bc4d13e34692c4a, type: 3}
   bulletHitEffectDuration: 0.5
+  gunAudioName: Rifle Shot
 --- !u!1 &749648584211065324
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,6 +503,8 @@ MonoBehaviour:
   volumeAnimationHandler: {fileID: 0}
   healthBarUI: {fileID: 0}
   maxHealth: 100
+  injuredAudioName: Player Injured
+  diedAudioName: Player Died
 --- !u!114 &5623809480459196554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -710,6 +714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89e053a9a9d8ff64cbcda930850a67af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraMovementFPS: {fileID: 7765020095596310791}
   targetRotation: -90
   duration: 1
 --- !u!1 &5344791830131651848
