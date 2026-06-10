@@ -84,3 +84,6 @@ crashlytics-build.properties
 /[Dd]ev.meta
 /[Aa]ssets/[Dd]eveloper.meta
 /[Aa]ssets/[Dd]ev.meta
+
+# Presskit
+/[Pp]resskit
